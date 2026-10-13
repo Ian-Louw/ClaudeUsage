@@ -48,7 +48,7 @@ The ring fills as you use more of your limit, and the number in the middle is th
 ## 🚀 Quick start
 
 ```bash
-pip install pystray pillow
+pip install -r requirements.txt
 pythonw claude_usage_widget.py
 ```
 

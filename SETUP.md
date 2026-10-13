@@ -8,10 +8,11 @@ When weekly usage crosses **85%**, the widget fires a Windows notification (once
 Download from https://www.python.org/downloads/ — during install, tick **"Add Python to PATH"**.
 
 ## 2. Install the two libraries
-Open Command Prompt and run:
+Open Command Prompt in the project folder and run:
 ```
-pip install pystray pillow
+pip install -r requirements.txt
 ```
+(Or, without the file: `pip install pystray pillow`)
 
 ## 3. Put the file somewhere permanent
 e.g. `C:\Tools\claude_usage_widget.py`
