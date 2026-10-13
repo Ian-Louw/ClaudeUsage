@@ -52,6 +52,7 @@ WARN_AT = 70                # orange threshold (%)
 CRIT_AT = 90                # red threshold (%)
 ALERT_AT = 85               # weekly % that triggers a Windows notification
 ALERT_CLEAR_AT = 80         # re-arm the notification once weekly drops below this
+MUTEX_NAME = "Local\\ClaudeUsageWidget.SingleInstance"
 
 CRED_PATHS = [
     # Allow an explicit override, e.g. for a WSL-mounted path:
@@ -351,5 +352,25 @@ class UsageApp:
         self.icon.run()
 
 
+def acquire_single_instance():
+    """Hold a named Windows mutex for the life of the process so a second
+    launch (e.g. startup shortcut + manual run) exits instead of adding a
+    duplicate tray icon. Windows frees the mutex when the process ends,
+    even on a crash. Returns the handle (keep it referenced), or None if
+    another instance already holds it."""
+    if sys.platform != "win32":
+        return True
+    import ctypes
+    kernel32 = ctypes.WinDLL("kernel32", use_last_error=True)
+    kernel32.CreateMutexW.restype = ctypes.c_void_p
+    handle = kernel32.CreateMutexW(None, False, MUTEX_NAME)
+    if ctypes.get_last_error() == 183:  # ERROR_ALREADY_EXISTS
+        return None
+    return handle or True  # if the mutex can't be created, run anyway
+
+
 if __name__ == "__main__":
+    _instance_lock = acquire_single_instance()
+    if _instance_lock is None:
+        sys.exit(0)  # already running — the existing icon stays put
     UsageApp().run()
