@@ -351,8 +351,14 @@ class UsageApp:
             self.stop_event.wait(wait)
 
     def run(self) -> None:
+        self.icon.run(setup=self.on_setup)
+
+    def on_setup(self, icon) -> None:
+        # Start polling only once the icon is visible: pystray ignores icon
+        # updates made before then, so a fast first fetch could otherwise
+        # leave the startup "?" on screen until the next poll.
+        icon.visible = True
         threading.Thread(target=self.poll_loop, daemon=True).start()
-        self.icon.run()
 
 
 def acquire_single_instance():
