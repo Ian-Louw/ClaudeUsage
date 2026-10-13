@@ -1,0 +1,23 @@
+# Normalise all text files to LF in the repo and on checkout,
+# regardless of each contributor's core.autocrlf setting.
+* text=auto eol=lf
+
+# Source and docs
+*.py   text diff=python
+*.md   text diff=markdown
+*.txt  text
+
+# Windows scripts need CRLF to run reliably
+*.bat  text eol=crlf
+*.cmd  text eol=crlf
+*.ps1  text eol=crlf
+
+# Binary assets — never diff or convert
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.ico  binary
+
+# Keep screenshots out of GitHub's language stats
+assets/** linguist-documentation
