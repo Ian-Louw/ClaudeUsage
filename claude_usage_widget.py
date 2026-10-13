@@ -111,6 +111,8 @@ def parse_usage(data: dict) -> dict:
     limits = data.get("limits")
     if isinstance(limits, list) and limits:
         for entry in limits:
+            if not isinstance(entry, dict):
+                continue
             kind = entry.get("kind", "")
             pct = entry.get("percent")
             if pct is None:
@@ -123,10 +125,9 @@ def parse_usage(data: dict) -> dict:
             elif kind == "weekly_all":
                 out["Weekly"] = (float(pct), resets)
             elif kind == "weekly_scoped":
-                name = (
-                    entry.get("scope", {}).get("model", {}).get("display_name")
-                    or "Model"
-                )
+                # any level may be missing or null in the response
+                model = (entry.get("scope") or {}).get("model") or {}
+                name = model.get("display_name") or "Model"
                 out[f"Weekly ({name})"] = (float(pct), resets)
 
     def flat(key: str, label: str) -> None:
@@ -148,6 +149,8 @@ def fmt_reset(iso: str | None) -> str:
         return ""
     try:
         ts = datetime.fromisoformat(iso.replace("Z", "+00:00"))
+        if ts.tzinfo is None:
+            ts = ts.replace(tzinfo=timezone.utc)  # API times are UTC
         delta = ts - datetime.now(timezone.utc)
         secs = int(delta.total_seconds())
         if secs <= 0:
@@ -160,7 +163,7 @@ def fmt_reset(iso: str | None) -> str:
         if h:
             return f"resets in {h}h {m}m"
         return f"resets in {m}m"
-    except ValueError:
+    except (ValueError, TypeError, AttributeError):  # malformed timestamp
         return ""
 
 # ---------------------------------------------------------------- icon layer
