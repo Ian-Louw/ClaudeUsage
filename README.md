@@ -13,6 +13,7 @@ so you never get surprised by a rate limit mid-flow again.
 ![Python](https://img.shields.io/badge/python-3.10%2B-3776AB?logo=python&logoColor=white)
 ![Single file](https://img.shields.io/badge/single%20file-~350%20lines-6E56CF)
 ![Telemetry](https://img.shields.io/badge/telemetry-none-2EA043)
+[![License: MIT](https://img.shields.io/badge/license-MIT-yellow)](LICENSE)
 
 </div>
 
@@ -129,6 +130,10 @@ setx CLAUDE_CREDENTIALS_PATH "\\wsl$\Ubuntu\home\<you>\.claude\.credentials.json
 - Windows 10 or 11
 - Python 3.10+
 - [Claude Code](https://claude.com/claude-code) installed and logged in on a paid plan
+
+## 📜 License
+
+[MIT](LICENSE) © Ian Louw
 
 ---
 
