@@ -117,6 +117,15 @@ Tweak the constants at the top of `claude_usage_widget.py`:
 setx CLAUDE_CREDENTIALS_PATH "\\wsl$\Ubuntu\home\<you>\.claude\.credentials.json"
 ```
 
+## 🧪 Tests
+
+Response parsing and the reset countdown are covered by a small pytest suite. The clock is frozen, so results are deterministic and no network is needed:
+
+```bash
+pip install pytest
+python -m pytest
+```
+
 ## 🩺 Troubleshooting
 
 | Symptom | Fix |
