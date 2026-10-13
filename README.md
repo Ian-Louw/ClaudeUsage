@@ -29,6 +29,11 @@ so you never get surprised by a rate limit mid-flow again.
 
 The ring fills as you use more of your limit, and the number in the middle is the exact percentage.
 
+<p align="center">
+  <img src="assets/tooltip.png" width="355" alt="Tooltip showing session 12%, weekly 13% and per-model weekly usage with reset countdowns">
+  <br><sub>Hovering the tray icon</sub>
+</p>
+
 - 🖱️ **Hover** to see a tooltip with session %, weekly %, per-model limits and reset countdowns (`resets in 2d 3h`)
 - 🔔 **Get alerted** with a Windows notification when weekly usage crosses **85%**. It fires once per crossing and re-arms below 80%, so no spam.
 - 🔀 **Right-click** to refresh now, switch the icon between weekly and session %, or exit
